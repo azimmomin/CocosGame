@@ -352,7 +352,8 @@ obj/local/armeabi/objs/cocos2dcpp_shared/__/__/Classes/LevelSelectScene.o: \
  jni/../../cocos2d/cocos/3d/../deprecated/CCString.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h \
- jni/../../Classes/GameScene.h jni/../../Classes/Definitions.h
+ jni/../../Classes/GameScene.h jni/../../Classes/Player.h \
+ jni/../../Classes/Definitions.h
 
 jni/../../Classes/LevelSelectScene.h:
 
@@ -1059,5 +1060,7 @@ jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h:
 jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h:
 
 jni/../../Classes/GameScene.h:
+
+jni/../../Classes/Player.h:
 
 jni/../../Classes/Definitions.h:

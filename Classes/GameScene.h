@@ -9,6 +9,7 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include "Player.h"
 
 class Game : public cocos2d::Layer
 {
@@ -19,7 +20,9 @@ public:
 	CREATE_FUNC( Game );
 private:
 	void DrawLevel( unsigned int level );
-	cocos2d::Sprite *_player;
+	bool onTouchBegan( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
+	void onTouchEnded( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
+	void ContinueMoving( float interval );
 };
 
 #endif /* __GAME_SCENE_H__ */

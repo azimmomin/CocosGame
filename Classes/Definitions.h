@@ -19,10 +19,19 @@
 
 #define NUM_LEVELS 9
 
+#define PLAYER_COLLISION_BITMASK 0x00000001
+
+#define GRAVITY cocos2d::Vec2( 0.0f, -2000.0f )
 enum ZOrder
 {
-	BACKGROUND = 0,
+	BACKGROUND   = 0,
 	MIDDLEGROUND = 1,
-	FOREGROUND = 2
+	FOREGROUND   = 2
+};
+
+enum MoveDirection
+{
+	RIGHT = 0,
+	LEFT  = 1
 };
 #endif /* __DEFINITIONS__H_ */
