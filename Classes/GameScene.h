@@ -20,9 +20,15 @@ public:
 	CREATE_FUNC( Game );
 private:
 	void DrawLevel( unsigned int level );
+	MoveDirection GetMoveDirFromTouch( cocos2d::Touch *touch );
+	void MovePlayer( MoveDirection dir );
 	bool onTouchBegan( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
 	void onTouchEnded( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
-	void ContinueMoving( float interval );
+	void onTouchMoved( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
+	void UpdateGame( float dt );
+
+	bool _isHeld;
+	MoveDirection _heldDir;
 };
 
 #endif /* __GAME_SCENE_H__ */

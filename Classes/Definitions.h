@@ -20,8 +20,12 @@
 #define NUM_LEVELS 9
 
 #define PLAYER_COLLISION_BITMASK 0x00000001
-
+#define PLAYER_SPEED 10
 #define GRAVITY cocos2d::Vec2( 0.0f, -2000.0f )
+
+#define FRAME_TIME 0.0167 // 1 / 60 ==> 60 frames per second
+
+#define GAME_PHYSICS_MATERIAL cocos2d::PhysicsMaterial( 0.0f, -100.0f, 0.0f )
 enum ZOrder
 {
 	BACKGROUND   = 0,
@@ -31,7 +35,8 @@ enum ZOrder
 
 enum MoveDirection
 {
-	RIGHT = 0,
-	LEFT  = 1
+	NONE = 0,
+	RIGHT = 1,
+	LEFT  = 2
 };
 #endif /* __DEFINITIONS__H_ */
