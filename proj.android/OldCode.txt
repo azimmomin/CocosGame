@@ -1,0 +1,57 @@
+====================================================================================================================================
+GameScene.cpp
+
+//bool Game::onTouchBegan( cocos2d::Touch* touch, cocos2d::Event* unused_event )
+//{
+//  //CCLOG( "TOUCH BEGAN" );
+//  if ( touch )
+//  {
+//      MoveDirection dir = GetMoveDirFromVec( touch );
+//      if ( dir == MoveDirection::RIGHT || dir == MoveDirection::LEFT )
+//      {
+//          _isMoveHeld = true;
+//          _heldDir = dir;
+//          MovePlayer( dir );
+//      }
+//  }
+//  return true;
+//}
+//
+//void Game::onTouchEnded( cocos2d::Touch* touch, cocos2d::Event* unused_event )
+//{
+//  //CCLOG( "TOUCH ENDED" );
+//  if ( touch )
+//      {
+//          MoveDirection dir = GetMoveDirFromVec( touch );
+//          if ( dir == MoveDirection::RIGHT || dir == MoveDirection::LEFT )
+//          {
+//              //Player::GetInstance( ).Move( dir );
+//              _isMoveHeld = false;
+//              _heldDir = MoveDirection::NONE;
+//          }
+//      }
+//}
+//
+//void Game::onTouchMoved( cocos2d::Touch* touch, cocos2d::Event* unused_event )
+//{
+//  //CCLOG( "TOUCH MOVED" );
+//  if ( touch )
+//  {
+//      MoveDirection dir = GetMoveDirFromVec( touch );
+//      CCLOG( "Direction: %d", dir );
+//      if ( dir == MoveDirection::NONE )
+//      {
+//          _isMoveHeld = false;               // Technically NONE is held but will make it false for now.
+//          _heldDir = MoveDirection::NONE;
+//      }
+//      else if ( dir != _heldDir )
+//      {
+//          _isMoveHeld = true;
+//          _heldDir = dir;
+//          MovePlayer( dir );
+//      }
+//      // Don't want to move player based on movement within the same direction button
+//  }
+//}
+
+====================================================================================================================================

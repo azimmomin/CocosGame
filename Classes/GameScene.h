@@ -19,15 +19,14 @@ public:
 	// implement the "static create()" method manually
 	CREATE_FUNC( Game );
 private:
-	void DrawLevel( unsigned int level );
-	MoveDirection GetMoveDirFromTouch( cocos2d::Touch *touch );
-	void MovePlayer( MoveDirection dir );
-	bool onTouchBegan( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
-	void onTouchEnded( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
-	void onTouchMoved( cocos2d::Touch* touch, cocos2d::Event* unused_event ) override;
+	MoveDirection GetMoveDirFromVec( cocos2d::Vec2 position );
+	void InitiateJump( );
+	void onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_event ) override;
+	void onTouchesEnded( const std::vector< Touch * > &touches, Event *unused_event ) override;
+	void onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_event ) override;
 	void UpdateGame( float dt );
 
-	bool _isHeld;
+	bool _isMoveHeld;
 	MoveDirection _heldDir;
 };
 

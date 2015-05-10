@@ -22,10 +22,11 @@ Player::Player( )
 
 	_image = Sprite::create( "Player.png" );
 	_image->setAnchorPoint( Vec2::ZERO );
-	_image->setPosition( Vec2( _image->getContentSize( ).width, _image->getContentSize( ).height ) );
+	// Will be placed in bottom right corner.
+	_image->setPosition( Vec2( _image->getContentSize( ).width / 2, _image->getContentSize( ).height / 2  ) );
 	//_image->setPosition( origin.x, origin.y );
 	auto playerPhysicsBody = PhysicsBody::createBox( _image->getContentSize( ), PhysicsMaterial( ) );
-	playerPhysicsBody->setDynamic( true );
+	//playerPhysicsBody->setDynamic( false );
 	_image->setPhysicsBody( playerPhysicsBody );
 	_image->getPhysicsBody( )->setCollisionBitmask( PLAYER_COLLISION_BITMASK );
 	_image->getPhysicsBody( )->setContactTestBitmask( true );

@@ -1,0 +1,2 @@
+1) Need to implement jumping
+2) There may be some issues with gravity so check that out.

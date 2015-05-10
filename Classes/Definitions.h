@@ -21,7 +21,7 @@
 
 #define PLAYER_COLLISION_BITMASK 0x00000001
 #define PLAYER_SPEED 10
-#define GRAVITY cocos2d::Vec2( 0.0f, -2000.0f )
+#define GRAVITY cocos2d::Vec2( 0.0f, -98.0f )
 
 #define FRAME_TIME 0.0167 // 1 / 60 ==> 60 frames per second
 
@@ -35,8 +35,9 @@ enum ZOrder
 
 enum MoveDirection
 {
-	NONE = 0,
+	NONE  = 0,
 	RIGHT = 1,
-	LEFT  = 2
+	LEFT  = 2,
+	UP    = 3       // JUMP
 };
 #endif /* __DEFINITIONS__H_ */
