@@ -21,6 +21,7 @@ public:
 private:
 	MoveDirection GetMoveDirFromVec( cocos2d::Vec2 position );
 	void InitiateJump( );
+	void InitiateMove( MoveDirection dir );
 	void onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_event ) override;
 	void onTouchesEnded( const std::vector< Touch * > &touches, Event *unused_event ) override;
 	void onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_event ) override;

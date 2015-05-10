@@ -73,6 +73,7 @@ void Game::onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_
 			MoveDirection dir = GetMoveDirFromVec( touch->getLocationInView( ) );
 			if ( dir == MoveDirection::RIGHT || dir == MoveDirection::LEFT )
 			{
+				Player::GetInstance( ).UpdateVelocity( dir );
 				InitiateMove( dir );
 				_isMoveHeld = true;
 				_heldDir = dir;
@@ -122,6 +123,7 @@ void Game::onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_
 				{
 					_isMoveHeld = true;
 					_heldDir = dir;
+					Player::GetInstance( ).UpdateVelocity( dir );
 					InitiateMove( dir );
 				}
 			}
@@ -131,6 +133,7 @@ void Game::onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_
 			{
 				_isMoveHeld = true;
 				_heldDir = dir;
+				Player::GetInstance( ).UpdateVelocity( dir );
 				InitiateMove( dir );
 			}
 		}
@@ -164,16 +167,19 @@ void Game::UpdateGame( float dt )
 {
 	if (_isMoveHeld && _heldDir != MoveDirection::NONE )
 	{
-		CCLOG("IS HELD");
+		//CCLOG("IS HELD");
 		// Only update player's position if it is within visible screen.
 		// Note that the player's anchor point will be at it's local (0, 0)
+		Player::GetInstance( ).UpdateVelocity( _heldDir );
 		InitiateMove( _heldDir );
 	}
 }
 
 void Game::InitiateJump( )
 {
-	// TO DO
+	Player::GetInstance( ).UpdateVelocity( MoveDirection::UP );
+	Player::GetInstance( ).Move( ); // this way we don't have to wait for left or right movement before jump happens.
+	                                // Still crappy but it's a start.
 }
 
 void Game::InitiateMove( MoveDirection dir )
@@ -181,12 +187,9 @@ void Game::InitiateMove( MoveDirection dir )
 	auto playerBBox = Player::GetInstance( ).GetSprite( )->getBoundingBox( );
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	//Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
-	if ( dir == MoveDirection::LEFT && playerBBox.getMinX( ) > 0 )
+	if ( ( dir == MoveDirection::LEFT && playerBBox.getMinX( ) > 0 ) ||
+		 ( dir == MoveDirection::RIGHT && playerBBox.getMaxX( ) < visibleSize.width ) )
 	{
-		Player::GetInstance( ).Move( dir );
-	}
-	else if ( dir == MoveDirection::RIGHT && playerBBox.getMaxX( ) < visibleSize.width )
-	{
-		Player::GetInstance( ).Move( dir );
+		Player::GetInstance( ).Move( );
 	}
 }

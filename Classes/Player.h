@@ -16,10 +16,12 @@ USING_NS_CC;
 class Player
 {
 private:
-	Sprite* _image  = NULL;
 	Player( );                                          // Will be a singleton class
 	Player( Player const& copy )             = delete;  // Copy Constructor ( Does nothing )
 	Player& operator=( Player const& copy )  = delete;  // Assignment Operator ( Does nothing )
+
+	Sprite* _image  = NULL;
+	Vec2    _velocity;
 public:
 	static Player& GetInstance( )                       // Meyer's Singleton for thread safety in C++11 onwards
 	{
@@ -27,7 +29,8 @@ public:
 		return mPlayerInstance;
 	}
 	Sprite* GetSprite( ) const;
-	void Move( const MoveDirection dir );
+	void Move( );
+	void UpdateVelocity( const MoveDirection &dir );
 };
 
 #endif /* __PLAYER__H_ */

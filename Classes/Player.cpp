@@ -9,14 +9,17 @@
  *    - Hold Sprite for player.
  *    - Update position based on user input
  */
+#define COCOS2D_DEBUG 1
 
 #include "Player.h"
+#include <algorithm>
 
 USING_NS_CC;
 
 
 Player::Player( )
 {
+	_velocity = Vec2( 0, 0 );
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
 
@@ -37,15 +40,25 @@ Sprite* Player::GetSprite( ) const
 	return _image;
 }
 
-void Player::Move( const MoveDirection dir )
+void Player::Move( )
+{
+	CCLOG( "VELOCITY: %.2f", _velocity.x );
+	_image->runAction( MoveBy::create( FRAME_TIME, _velocity ) );
+}
+
+void Player::UpdateVelocity( const MoveDirection &dir )
 {
 	if ( dir == MoveDirection::LEFT )
 	{
-		_image->runAction( MoveBy::create( FRAME_TIME, Vec2( -PLAYER_SPEED, 0 ) ) );
+		_velocity.x = std::max( -MAX_PLAYER_VELOCITY, _velocity.x - PLAYER_ACCELERATION );
 	}
-	else if ( dir == MoveDirection::RIGHT )
+	else if ( dir == MoveDirection::RIGHT  )
 	{
-		_image->runAction( MoveBy::create( FRAME_TIME, Vec2( PLAYER_SPEED, 0 ) ) );
+		_velocity.x = std::min( MAX_PLAYER_VELOCITY, _velocity.x + PLAYER_ACCELERATION );
+	}
+	else if ( dir == MoveDirection::UP )
+	{
+		_velocity.y += 0.5f; // This is really bad right now.
 	}
 	else
 	{
