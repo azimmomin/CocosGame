@@ -22,6 +22,8 @@ private:
 
 	Sprite* _image  = NULL;
 	Vec2    _velocity;
+	bool    _isJumping;
+	bool    _isFalling;
 public:
 	static Player& GetInstance( )                       // Meyer's Singleton for thread safety in C++11 onwards
 	{
@@ -30,7 +32,9 @@ public:
 	}
 	Sprite* GetSprite( ) const;
 	void Move( );
-	void UpdateVelocity( const MoveDirection &dir );
+	void Fall( );
+	void Jump( );
+	void UpdateState( const MoveDirection &dir );
 };
 
 #endif /* __PLAYER__H_ */

@@ -19,7 +19,9 @@ USING_NS_CC;
 
 Player::Player( )
 {
-	_velocity = Vec2( 0, 0 );
+	_velocity  = Vec2( 0, 0 );
+	_isJumping = false;
+	_isFalling = false;
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
 
@@ -27,9 +29,9 @@ Player::Player( )
 	_image->setAnchorPoint( Vec2::ZERO );
 	// Will be placed in bottom right corner.
 	_image->setPosition( Vec2( _image->getContentSize( ).width / 2, _image->getContentSize( ).height / 2  ) );
-	//_image->setPosition( origin.x, origin.y );
+
 	auto playerPhysicsBody = PhysicsBody::createBox( _image->getContentSize( ), PhysicsMaterial( ) );
-	//playerPhysicsBody->setDynamic( false );
+	playerPhysicsBody->setDynamic( false );
 	_image->setPhysicsBody( playerPhysicsBody );
 	_image->getPhysicsBody( )->setCollisionBitmask( PLAYER_COLLISION_BITMASK );
 	_image->getPhysicsBody( )->setContactTestBitmask( true );
@@ -46,7 +48,33 @@ void Player::Move( )
 	_image->runAction( MoveBy::create( FRAME_TIME, _velocity ) );
 }
 
-void Player::UpdateVelocity( const MoveDirection &dir )
+void Player::Jump( )
+{
+	Size visibleSize = Director::getInstance( )->getVisibleSize( );
+
+	if ( _isJumping )
+	{
+		_image->setPositionY( _image->getPositionY( ) + ( PLAYER_JUMP_SPEED * visibleSize.height ) );
+	}
+	_isFalling = true;
+}
+
+void Player::Fall( )
+{
+	Size visibleSize = Director::getInstance( )->getVisibleSize( );
+	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
+	if ( _image->getPositionY( ) <= _image->getContentSize( ).height / 2 )
+	{
+		_isFalling = false;
+		return;
+	}
+	else if ( _isFalling )
+	{
+		_image->setPositionY( _image->getPositionY( ) - ( PLAYER_FALL_SPEED * visibleSize.height ) );
+	}
+}
+
+void Player::UpdateState( const MoveDirection &dir )
 {
 	if ( dir == MoveDirection::LEFT )
 	{
@@ -58,7 +86,9 @@ void Player::UpdateVelocity( const MoveDirection &dir )
 	}
 	else if ( dir == MoveDirection::UP )
 	{
-		_velocity.y += 0.5f; // This is really bad right now.
+		//_velocity.y += std::min( MAX_PLAYER_JUMP_THRUST, _velocity.y + PLAYER_JUMP_THRUST ); // This is really bad right now.
+		_isJumping = true;
+		_isFalling = false;
 	}
 	else
 	{
