@@ -25,8 +25,9 @@
 #define PLAYER_ACCELERATION 2.0f
 #define MAX_PLAYER_VELOCITY 10.0f
 
-#define PLAYER_JUMP_SPEED 0.01
-#define PLAYER_FALL_SPEED 0.00075
+#define PLAYER_JUMP_SPEED 0.1f
+#define PLAYER_FALL_SPEED 0.0075f
+#define MAX_JUMP_COUNT 2                    // For double jumping
 
 #define GRAVITY cocos2d::Vec2( 0.0f, -98.0f )
 
@@ -41,11 +42,12 @@ enum ZOrder
 	FOREGROUND   = 2
 };
 
-enum MoveDirection
+enum PlayerAction
 {
 	NONE  = 0,
 	RIGHT = 1,
 	LEFT  = 2,
-	UP    = 3       // JUMP
+	UP    = 3,       // JUMP
+	SHOOT = 4
 };
 #endif /* __DEFINITIONS__H_ */

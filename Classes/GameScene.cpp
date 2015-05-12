@@ -44,7 +44,7 @@ bool Game::init()
     }
 
     _isMoveHeld = false;
-    _heldDir    = MoveDirection::NONE;
+    _heldDir    = PlayerAction::NONE;
 
     this->addChild( Player::GetInstance( ).GetSprite( ), ZOrder::BACKGROUND );
     auto touchListener = EventListenerTouchAllAtOnce::create( );
@@ -70,15 +70,15 @@ void Game::onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_
 	{
 		if ( touch )
 		{
-			MoveDirection dir = GetMoveDirFromVec( touch->getLocationInView( ) );
-			if ( dir == MoveDirection::RIGHT || dir == MoveDirection::LEFT )
+			PlayerAction action = GetActionFromVec( touch->getLocationInView( ) );
+			Player::GetInstance( ).UpdateState( action );
+			if ( action == PlayerAction::RIGHT || action == PlayerAction::LEFT )
 			{
-				Player::GetInstance( ).UpdateState( dir );
-				InitiateMove( dir );
+				InitiateMove( action );
 				_isMoveHeld = true;
-				_heldDir = dir;
+				_heldDir = action;
 			}
-			else if ( dir == MoveDirection::UP )
+			else if ( action == PlayerAction::UP )
 			{
 				InitiateJump(  );
 			}
@@ -92,11 +92,11 @@ void Game::onTouchesEnded( const std::vector< Touch * > &touches, Event *unused_
 	{
 		if ( touch )
 		{
-			MoveDirection dir = GetMoveDirFromVec( touch->getLocationInView( ) );
-			if ( dir == MoveDirection::RIGHT || dir == MoveDirection::LEFT )
+			PlayerAction action = GetActionFromVec( touch->getLocationInView( ) );
+			if ( action == PlayerAction::RIGHT || action == PlayerAction::LEFT )
 			{
 				_isMoveHeld = false;
-				_heldDir = MoveDirection::NONE;
+				_heldDir = PlayerAction::NONE;
 			}
 		}
 	}
@@ -108,64 +108,70 @@ void Game::onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_
 	{
 		if ( touch )
 		{
-			MoveDirection dir = GetMoveDirFromVec( touch->getLocationInView( ) );
-			MoveDirection prevDir = GetMoveDirFromVec( touch->getPreviousLocationInView( ) );
+			PlayerAction currAction = GetActionFromVec( touch->getLocationInView( ) );
+			PlayerAction prevAction = GetActionFromVec( touch->getPreviousLocationInView( ) );
 			// We don't worry about movements within the held move button or jump button
 			// slide touch from movement to same movement or non movement.
-			if ( prevDir == _heldDir && dir != _heldDir )
+			if ( prevAction == _heldDir && currAction != _heldDir )
 			{
-				if ( dir == MoveDirection::NONE || dir == MoveDirection::UP )
+				if ( currAction == PlayerAction::NONE || currAction == PlayerAction::UP )
 				{
 					_isMoveHeld = false;
-					_heldDir = MoveDirection::NONE;
+					_heldDir = PlayerAction::NONE;
 				}
 				else
 				{
 					_isMoveHeld = true;
-					_heldDir = dir;
-					Player::GetInstance( ).UpdateState( dir );
-					InitiateMove( dir );
+					_heldDir = currAction;
+					Player::GetInstance( ).UpdateState( currAction );
+					InitiateMove( currAction );
 				}
 			}
 			// slide touch from non movement area to movement area.
-			else if ( ( prevDir != MoveDirection::RIGHT && prevDir != MoveDirection::LEFT  ) &&
-					   ( dir == MoveDirection::RIGHT || dir == MoveDirection::LEFT ) )
+			else if ( ( prevAction != PlayerAction::RIGHT && prevAction != PlayerAction::LEFT  ) &&
+					   ( currAction == PlayerAction::RIGHT || currAction == PlayerAction::LEFT ) )
 			{
 				_isMoveHeld = true;
-				_heldDir = dir;
-				Player::GetInstance( ).UpdateState( dir );
-				InitiateMove( dir );
+				_heldDir = currAction;
+				Player::GetInstance( ).UpdateState( currAction );
+				InitiateMove( currAction );
 			}
 		}
 	}
 }
 
-MoveDirection Game::GetMoveDirFromVec( Vec2 position )
+PlayerAction Game::GetActionFromVec( Vec2 position )
 {
 	Point p = Director::getInstance( )->convertToGL( position );
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
 	float leftBound = visibleSize.width / 6 + origin.x;
 	float rightBound = visibleSize.width / 3 + origin.x;
-	MoveDirection dir = MoveDirection::NONE;
+	float jumpBound = ( visibleSize.width * 5 / 6 ) + origin.x;
+	PlayerAction action = PlayerAction::NONE;
+
 	if ( p.x >= 0 && p.x < leftBound )
 	{
-		dir = MoveDirection::LEFT;
+		action = PlayerAction::LEFT;
 	}
 	else if ( p.x >= leftBound && p.x < rightBound )
 	{
-		dir = MoveDirection::RIGHT;
+		action = PlayerAction::RIGHT;
+	}
+	else if ( p.x >= rightBound && p.x < jumpBound )
+	{
+		action = PlayerAction::UP;
 	}
 	else
 	{
-		dir = MoveDirection::UP;
+		action = PlayerAction::SHOOT;
 	}
-	return dir;                 // NOTE: This should never actually return NONE if the touch is on the screen.
+	return action;                 // NOTE: This should never actually return NONE if the touch is on the screen.
 }
 
 void Game::UpdateGame( float dt )
 {
-	if (_isMoveHeld && _heldDir != MoveDirection::NONE )
+	if ( _isMoveHeld && _heldDir != PlayerAction::NONE )
 	{
 		//CCLOG("IS HELD");
 		// Only update player's position if it is within visible screen.
@@ -178,17 +184,17 @@ void Game::UpdateGame( float dt )
 
 void Game::InitiateJump( )
 {
-	Player::GetInstance( ).UpdateState( MoveDirection::UP );
+	//Player::GetInstance( ).UpdateState( PlayerAction::UP );
 	Player::GetInstance( ).Jump( );
 }
 
-void Game::InitiateMove( MoveDirection dir )
+void Game::InitiateMove( PlayerAction action )
 {
 	auto playerBBox = Player::GetInstance( ).GetSprite( )->getBoundingBox( );
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	//Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
-	if ( ( dir == MoveDirection::LEFT && playerBBox.getMinX( ) > 0 ) ||
-		 ( dir == MoveDirection::RIGHT && playerBBox.getMaxX( ) < visibleSize.width ) )
+	if ( ( action == PlayerAction::LEFT && playerBBox.getMinX( ) > 0 ) ||
+		 ( action == PlayerAction::RIGHT && playerBBox.getMaxX( ) < visibleSize.width ) )
 	{
 		Player::GetInstance( ).Move( );
 	}

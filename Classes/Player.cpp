@@ -22,6 +22,7 @@ Player::Player( )
 	_velocity  = Vec2( 0, 0 );
 	_isJumping = false;
 	_isFalling = false;
+	_jumpCount = 0;
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
 
@@ -37,35 +38,15 @@ Player::Player( )
 	_image->getPhysicsBody( )->setContactTestBitmask( true );
 }
 
-Sprite* Player::GetSprite( ) const
-{
-	return _image;
-}
-
-void Player::Move( )
-{
-	CCLOG( "VELOCITY: %.2f", _velocity.x );
-	_image->runAction( MoveBy::create( FRAME_TIME, _velocity ) );
-}
-
-void Player::Jump( )
-{
-	Size visibleSize = Director::getInstance( )->getVisibleSize( );
-
-	if ( _isJumping )
-	{
-		_image->setPositionY( _image->getPositionY( ) + ( PLAYER_JUMP_SPEED * visibleSize.height ) );
-	}
-	_isFalling = true;
-}
-
 void Player::Fall( )
 {
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
 	if ( _image->getPositionY( ) <= _image->getContentSize( ).height / 2 )
 	{
-		_isFalling = false;
+		SetFalling( false );
+		SetJumping( false );
+		ResetJumpCount( );
 		return;
 	}
 	else if ( _isFalling )
@@ -74,25 +55,79 @@ void Player::Fall( )
 	}
 }
 
-void Player::UpdateState( const MoveDirection &dir )
+int Player::GetJumpCount( ) const
 {
-	if ( dir == MoveDirection::LEFT )
+	return _jumpCount;
+}
+
+Sprite* Player::GetSprite( ) const
+{
+	return _image;
+}
+
+void Player::IncrementJumpCount( )
+{
+	_jumpCount += 1;
+}
+
+void Player::Jump( )
+{
+	Size visibleSize = Director::getInstance( )->getVisibleSize( );
+
+	if ( _isJumping && GetJumpCount( ) < MAX_JUMP_COUNT )
+	{
+		_image->setPositionY( _image->getPositionY( ) + ( PLAYER_JUMP_SPEED * visibleSize.height ) );
+	}
+	SetFalling( true );
+}
+
+void Player::Move( )
+{
+	_image->runAction( MoveBy::create( FRAME_TIME, _velocity ) );
+}
+
+void Player::ResetJumpCount( )
+{
+	_jumpCount = 0;
+}
+
+void Player::SetJumping( const bool isJumping )
+{
+	_isJumping = isJumping;
+}
+
+void Player::SetFalling( const bool isFalling )
+{
+	_isFalling = isFalling;
+}
+
+void Player::UpdateState( const PlayerAction &action )
+{
+	if ( action == PlayerAction::LEFT )
 	{
 		_velocity.x = std::max( -MAX_PLAYER_VELOCITY, _velocity.x - PLAYER_ACCELERATION );
 	}
-	else if ( dir == MoveDirection::RIGHT  )
+	else if ( action == PlayerAction::RIGHT  )
 	{
 		_velocity.x = std::min( MAX_PLAYER_VELOCITY, _velocity.x + PLAYER_ACCELERATION );
 	}
-	else if ( dir == MoveDirection::UP )
+	else if ( action == PlayerAction::UP )
 	{
-		//_velocity.y += std::min( MAX_PLAYER_JUMP_THRUST, _velocity.y + PLAYER_JUMP_THRUST ); // This is really bad right now.
-		_isJumping = true;
-		_isFalling = false;
+		CCLOG( "JUMP COUNT: %d", GetJumpCount( ) );
+		CCLOG( "IS JUMPING?: %d", _isJumping );
+		if ( GetJumpCount( ) < MAX_JUMP_COUNT)
+		{
+			SetJumping( true );
+			SetFalling( false );
+			IncrementJumpCount( );
+		}
+	}
+	else if ( action == PlayerAction::SHOOT )
+	{
+		// DO NOTHING FOR NOW
 	}
 	else
 	{
-		// This should never happen
-		CCLOG( "%s", "MOVEDIRECTION IS NONE" );
+		CCLOG( "%s", "PLAYER ACTION IS NONE" );
 	}
 }
