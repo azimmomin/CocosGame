@@ -22,26 +22,32 @@ Player::Player( )
 	_velocity  = Vec2( 0, 0 );
 	_isFalling = false;
 	_jumpCount = 0;
+	_numProjectiles = PROJECTILE_COUNT;
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
 
-	_image = Sprite::create( "Player.png" );
-	_image->setAnchorPoint( Vec2::ZERO );
+	_entitySprite = Sprite::create( "Player.png" );
+	_entitySprite->setAnchorPoint( Vec2::ZERO );
 	// Will be placed in bottom right corner.
-	_image->setPosition( Vec2( _image->getContentSize( ).width / 2, _image->getContentSize( ).height / 2  ) );
+	_entitySprite->setPosition( Vec2( _entitySprite->getContentSize( ).width / 2, _entitySprite->getContentSize( ).height / 2  ) );
 
-	auto playerPhysicsBody = PhysicsBody::createBox( _image->getContentSize( ), PhysicsMaterial( ) );
+	auto playerPhysicsBody = PhysicsBody::createBox( _entitySprite->getContentSize( ), PhysicsMaterial( ) );
 	playerPhysicsBody->setDynamic( false );
-	_image->setPhysicsBody( playerPhysicsBody );
-	_image->getPhysicsBody( )->setCollisionBitmask( PLAYER_COLLISION_BITMASK );
-	_image->getPhysicsBody( )->setContactTestBitmask( true );
+	_entitySprite->setPhysicsBody( playerPhysicsBody );
+	_entitySprite->getPhysicsBody( )->setCollisionBitmask( PLAYER_COLLISION_BITMASK );
+	_entitySprite->getPhysicsBody( )->setContactTestBitmask( true );
+}
+
+Player::~Player( )
+{
+	// Nothing to remove right now.
 }
 
 void Player::Fall( )
 {
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	// Once player hits ground reset everything
-	if ( _image->getPositionY( ) <= _image->getContentSize( ).height / 2 )
+	if ( _entitySprite->getPositionY( ) <= _entitySprite->getContentSize( ).height / 2 )
 	{
 		SetFalling( false );
 		ResetJumpCount( );
@@ -49,18 +55,13 @@ void Player::Fall( )
 	}
 	else if ( _isFalling )
 	{
-		_image->setPositionY( _image->getPositionY( ) - ( PLAYER_FALL_SPEED * visibleSize.height ) );
+		_entitySprite->setPositionY( _entitySprite->getPositionY( ) - ( PLAYER_FALL_SPEED * visibleSize.height ) );
 	}
 }
 
 int Player::GetJumpCount( ) const
 {
 	return _jumpCount;
-}
-
-Sprite* Player::GetSprite( ) const
-{
-	return _image;
 }
 
 void Player::IncrementJumpCount( )
@@ -73,7 +74,7 @@ void Player::Jump( )
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
 	if ( GetJumpCount( ) < MAX_JUMP_COUNT )
 	{
-		_image->setPositionY( _image->getPositionY( ) + ( PLAYER_JUMP_SPEED * visibleSize.height ) );
+		_entitySprite->setPositionY( _entitySprite->getPositionY( ) + ( PLAYER_JUMP_SPEED * visibleSize.height ) );
 		IncrementJumpCount( );
 	}
 	// Player will start falling at the end of the jump
@@ -82,7 +83,7 @@ void Player::Jump( )
 
 void Player::Move( )
 {
-	_image->runAction( MoveBy::create( FRAME_TIME, _velocity ) );
+	_entitySprite->runAction( MoveBy::create( FRAME_TIME, _velocity ) );
 }
 
 void Player::ResetJumpCount( )

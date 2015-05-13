@@ -8,24 +8,23 @@
 #ifndef __PLAYER__H_
 #define __PLAYER__H_
 
-#include "cocos2d.h"
 #include "Definitions.h"
+#include "Projectile.h"
+#include "Entity.h"
 
-USING_NS_CC;
-
-class Player
+class Player : Entity
 {
 private:
 	Player( );                                          // Will be a singleton class
 	Player( Player const& copy )             = delete;  // Copy Constructor ( Does nothing )
 	Player& operator=( Player const& copy )  = delete;  // Assignment Operator ( Does nothing )
 
-	Sprite*        _image                    = NULL;
 	Vec2           _velocity;
 	int            _jumpCount;
 	bool           _isFalling;
-
+	int            _numProjectiles;
 public:
+	~Player( );
 	void           Fall( );
 	static Player& GetInstance( )                       // Meyer's Singleton for thread safety in C++11 onwards
 	{
@@ -34,7 +33,6 @@ public:
 	};
 
 	int            GetJumpCount( )  const;
-	Sprite*        GetSprite( ) const;
 	void           IncrementJumpCount( );
 	void           Jump( );
 	void           Move( );

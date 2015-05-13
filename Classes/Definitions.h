@@ -20,6 +20,7 @@
 #define NUM_LEVELS 9
 
 #define PLAYER_COLLISION_BITMASK 0x00000001
+#define PROJECTILE_COLLISION_BITMASK 0x00000002
 
 #define PLAYER_SPEED 10
 #define PLAYER_ACCELERATION 2.0f
@@ -34,7 +35,8 @@
 #define FRAME_TIME 0.0167 // 1 / 60 ==> 60 frames per second
 
 #define GAME_PHYSICS_MATERIAL cocos2d::PhysicsMaterial( 0.0f, -100.0f, 0.0f )
-//#define PLAYER_PHYSICS_MATERIAL cocos2d::PhysicsMaterial( 100.0f , 0.0f, 0.0f )
+
+#define PROJECTILE_COUNT 3
 enum ZOrder
 {
 	BACKGROUND   = 0,

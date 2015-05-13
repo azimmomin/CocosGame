@@ -1,7 +1,5 @@
 Implement Shooting
-  - Need Projectile Class
-  - Need to hold numProjectiles in Player
-  - implement Shoot
+  - need an entitymanager
 Make Obstacles
 Collision detection callbacks
 Make Enemies
