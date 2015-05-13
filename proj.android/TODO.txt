@@ -1,3 +1,10 @@
-1) There may be some issues with gravity so check that out.
-2) Implement Shooting
-3) Double jumping not working... i think there may be something happening with _isJumping not being set correctly.
+Implement Shooting
+  - Need Projectile Class
+  - Need to hold numProjectiles in Player
+  - implement Shoot
+Make Obstacles
+Collision detection callbacks
+Make Enemies
+Need to update Fall method in Player to stop falling when a collision is detected on bottom
+May need to tweak PLAYER_JUMP_SPEED to allow for higher jumps.
+Player stats/skills: will need to pull out alot of definitions into separate class so we can allow player to tweak them.

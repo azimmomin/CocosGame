@@ -20,6 +20,7 @@ public:
 	CREATE_FUNC( Game );
 private:
 	PlayerAction GetActionFromVec( cocos2d::Vec2 position );
+	void InitiateAttack( );
 	void InitiateJump( );
 	void InitiateMove( PlayerAction action );
 	void onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_event ) override;

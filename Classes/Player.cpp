@@ -20,7 +20,6 @@ USING_NS_CC;
 Player::Player( )
 {
 	_velocity  = Vec2( 0, 0 );
-	_isJumping = false;
 	_isFalling = false;
 	_jumpCount = 0;
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
@@ -41,11 +40,10 @@ Player::Player( )
 void Player::Fall( )
 {
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
-	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
+	// Once player hits ground reset everything
 	if ( _image->getPositionY( ) <= _image->getContentSize( ).height / 2 )
 	{
 		SetFalling( false );
-		SetJumping( false );
 		ResetJumpCount( );
 		return;
 	}
@@ -73,11 +71,12 @@ void Player::IncrementJumpCount( )
 void Player::Jump( )
 {
 	Size visibleSize = Director::getInstance( )->getVisibleSize( );
-
-	if ( _isJumping && GetJumpCount( ) < MAX_JUMP_COUNT )
+	if ( GetJumpCount( ) < MAX_JUMP_COUNT )
 	{
 		_image->setPositionY( _image->getPositionY( ) + ( PLAYER_JUMP_SPEED * visibleSize.height ) );
+		IncrementJumpCount( );
 	}
+	// Player will start falling at the end of the jump
 	SetFalling( true );
 }
 
@@ -91,16 +90,18 @@ void Player::ResetJumpCount( )
 	_jumpCount = 0;
 }
 
-void Player::SetJumping( const bool isJumping )
-{
-	_isJumping = isJumping;
-}
-
 void Player::SetFalling( const bool isFalling )
 {
 	_isFalling = isFalling;
 }
 
+void Player::Shoot( )
+{
+
+}
+
+// Currently only meant for movement since jumping and shooting don't affect the
+// state of the player in terms of it's velocity or life.
 void Player::UpdateState( const PlayerAction &action )
 {
 	if ( action == PlayerAction::LEFT )
@@ -111,23 +112,8 @@ void Player::UpdateState( const PlayerAction &action )
 	{
 		_velocity.x = std::min( MAX_PLAYER_VELOCITY, _velocity.x + PLAYER_ACCELERATION );
 	}
-	else if ( action == PlayerAction::UP )
-	{
-		CCLOG( "JUMP COUNT: %d", GetJumpCount( ) );
-		CCLOG( "IS JUMPING?: %d", _isJumping );
-		if ( GetJumpCount( ) < MAX_JUMP_COUNT)
-		{
-			SetJumping( true );
-			SetFalling( false );
-			IncrementJumpCount( );
-		}
-	}
-	else if ( action == PlayerAction::SHOOT )
-	{
-		// DO NOTHING FOR NOW
-	}
 	else
 	{
-		CCLOG( "%s", "PLAYER ACTION IS NONE" );
+		CCLOG( "%s", "PLAYER ACTION IS NOT A MOVEMENT" );
 	}
 }

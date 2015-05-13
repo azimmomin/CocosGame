@@ -54,4 +54,11 @@ GameScene.cpp
 //  }
 //}
 
+//    This goes in init method for GameScene.cpp
+//    auto touchListener = EventListenerTouchOneByOne::create( );
+//    touchListener->setSwallowTouches( true );
+//    touchListener->onTouchBegan = CC_CALLBACK_2( Game::onTouchBegan, this );
+//    touchListener->onTouchEnded = CC_CALLBACK_2( Game::onTouchEnded, this );
+//    touchListener->onTouchCancelled = CC_CALLBACK_2( Game::onTouchEnded, this );
+//    touchListener->onTouchMoved = CC_CALLBACK_2( Game::onTouchMoved, this );
 ====================================================================================================================================

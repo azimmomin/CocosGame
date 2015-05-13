@@ -52,16 +52,63 @@ bool Game::init()
     touchListener->onTouchesEnded = CC_CALLBACK_2( Game::onTouchesEnded, this );
     touchListener->onTouchesMoved = CC_CALLBACK_2( Game::onTouchesMoved, this );
     touchListener->onTouchesCancelled = CC_CALLBACK_2( Game::onTouchesEnded, this );
-//    auto touchListener = EventListenerTouchOneByOne::create( );
-//    touchListener->setSwallowTouches( true );
-//    touchListener->onTouchBegan = CC_CALLBACK_2( Game::onTouchBegan, this );
-//    touchListener->onTouchEnded = CC_CALLBACK_2( Game::onTouchEnded, this );
-//    touchListener->onTouchCancelled = CC_CALLBACK_2( Game::onTouchEnded, this );
-//    touchListener->onTouchMoved = CC_CALLBACK_2( Game::onTouchMoved, this );
     Director::getInstance( )->getEventDispatcher( )
     		->addEventListenerWithSceneGraphPriority( touchListener, this );
     this->schedule( schedule_selector( Game::UpdateGame ), FRAME_TIME );
     return true;
+}
+
+
+
+PlayerAction Game::GetActionFromVec( Vec2 position )
+{
+	Point p = Director::getInstance( )->convertToGL( position );
+	Size visibleSize = Director::getInstance( )->getVisibleSize( );
+	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
+	float leftBound = visibleSize.width / 6 + origin.x;
+	float rightBound = visibleSize.width / 3 + origin.x;
+	float jumpBound = ( visibleSize.width * 5 / 6 ) + origin.x;
+	PlayerAction action = PlayerAction::NONE;
+
+	if ( p.x >= 0 && p.x < leftBound )
+	{
+		action = PlayerAction::LEFT;
+	}
+	else if ( p.x >= leftBound && p.x < rightBound )
+	{
+		action = PlayerAction::RIGHT;
+	}
+	else if ( p.x >= rightBound && p.x < jumpBound )
+	{
+		action = PlayerAction::JUMP;
+	}
+	else
+	{
+		action = PlayerAction::SHOOT;
+	}
+	return action;                 // NOTE: This should never actually return NONE if the touch is on the screen.
+}
+
+void Game::InitiateAttack( )
+{
+	Player::GetInstance( ).Shoot( );
+}
+
+void Game::InitiateJump( )
+{
+	Player::GetInstance( ).Jump( );
+}
+
+void Game::InitiateMove( PlayerAction action )
+{
+	auto playerBBox = Player::GetInstance( ).GetSprite( )->getBoundingBox( );
+	Size visibleSize = Director::getInstance( )->getVisibleSize( );
+	//Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
+	if ( ( action == PlayerAction::LEFT && playerBBox.getMinX( ) > 0 ) ||
+		 ( action == PlayerAction::RIGHT && playerBBox.getMaxX( ) < visibleSize.width ) )
+	{
+		Player::GetInstance( ).Move( );
+	}
 }
 
 void Game::onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_event )
@@ -71,16 +118,20 @@ void Game::onTouchesBegan( const std::vector< Touch * > &touches, Event *unused_
 		if ( touch )
 		{
 			PlayerAction action = GetActionFromVec( touch->getLocationInView( ) );
-			Player::GetInstance( ).UpdateState( action );
 			if ( action == PlayerAction::RIGHT || action == PlayerAction::LEFT )
 			{
+				Player::GetInstance( ).UpdateState( action );
 				InitiateMove( action );
 				_isMoveHeld = true;
 				_heldDir = action;
 			}
-			else if ( action == PlayerAction::UP )
+			else if ( action == PlayerAction::JUMP )
 			{
 				InitiateJump(  );
+			}
+			else if ( action == PlayerAction::SHOOT )
+			{
+				InitiateAttack( );
 			}
 		}
 	}
@@ -114,7 +165,7 @@ void Game::onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_
 			// slide touch from movement to same movement or non movement.
 			if ( prevAction == _heldDir && currAction != _heldDir )
 			{
-				if ( currAction == PlayerAction::NONE || currAction == PlayerAction::UP )
+				if ( currAction == PlayerAction::NONE || currAction == PlayerAction::JUMP || currAction == PlayerAction::SHOOT )
 				{
 					_isMoveHeld = false;
 					_heldDir = PlayerAction::NONE;
@@ -140,35 +191,6 @@ void Game::onTouchesMoved( const std::vector< Touch * > &touches, Event *unused_
 	}
 }
 
-PlayerAction Game::GetActionFromVec( Vec2 position )
-{
-	Point p = Director::getInstance( )->convertToGL( position );
-	Size visibleSize = Director::getInstance( )->getVisibleSize( );
-	Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
-	float leftBound = visibleSize.width / 6 + origin.x;
-	float rightBound = visibleSize.width / 3 + origin.x;
-	float jumpBound = ( visibleSize.width * 5 / 6 ) + origin.x;
-	PlayerAction action = PlayerAction::NONE;
-
-	if ( p.x >= 0 && p.x < leftBound )
-	{
-		action = PlayerAction::LEFT;
-	}
-	else if ( p.x >= leftBound && p.x < rightBound )
-	{
-		action = PlayerAction::RIGHT;
-	}
-	else if ( p.x >= rightBound && p.x < jumpBound )
-	{
-		action = PlayerAction::UP;
-	}
-	else
-	{
-		action = PlayerAction::SHOOT;
-	}
-	return action;                 // NOTE: This should never actually return NONE if the touch is on the screen.
-}
-
 void Game::UpdateGame( float dt )
 {
 	if ( _isMoveHeld && _heldDir != PlayerAction::NONE )
@@ -180,22 +202,4 @@ void Game::UpdateGame( float dt )
 		InitiateMove( _heldDir );
 	}
 	Player::GetInstance( ).Fall( );
-}
-
-void Game::InitiateJump( )
-{
-	//Player::GetInstance( ).UpdateState( PlayerAction::UP );
-	Player::GetInstance( ).Jump( );
-}
-
-void Game::InitiateMove( PlayerAction action )
-{
-	auto playerBBox = Player::GetInstance( ).GetSprite( )->getBoundingBox( );
-	Size visibleSize = Director::getInstance( )->getVisibleSize( );
-	//Vec2 origin = Director::getInstance( )->getVisibleOrigin( );
-	if ( ( action == PlayerAction::LEFT && playerBBox.getMinX( ) > 0 ) ||
-		 ( action == PlayerAction::RIGHT && playerBBox.getMaxX( ) < visibleSize.width ) )
-	{
-		Player::GetInstance( ).Move( );
-	}
 }

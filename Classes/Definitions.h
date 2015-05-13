@@ -47,7 +47,7 @@ enum PlayerAction
 	NONE  = 0,
 	RIGHT = 1,
 	LEFT  = 2,
-	UP    = 3,       // JUMP
+	JUMP  = 3,
 	SHOOT = 4
 };
 #endif /* __DEFINITIONS__H_ */
