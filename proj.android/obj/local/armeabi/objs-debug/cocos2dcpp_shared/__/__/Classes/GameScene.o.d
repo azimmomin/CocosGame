@@ -351,7 +351,8 @@ obj/local/armeabi/objs-debug/cocos2dcpp_shared/__/__/Classes/GameScene.o: \
  jni/../../cocos2d/cocos/3d/../deprecated/CCString.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h \
- jni/../../Classes/Player.h jni/../../Classes/Definitions.h
+ jni/../../Classes/Player.h jni/../../Classes/Definitions.h \
+ jni/../../Classes/Projectile.h jni/../../Classes/Entity.h
 
 jni/../../Classes/GameScene.h:
 
@@ -1060,3 +1061,7 @@ jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h:
 jni/../../Classes/Player.h:
 
 jni/../../Classes/Definitions.h:
+
+jni/../../Classes/Projectile.h:
+
+jni/../../Classes/Entity.h:

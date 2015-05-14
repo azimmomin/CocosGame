@@ -40,7 +40,7 @@ Player::Player( )
 
 Player::~Player( )
 {
-	// Nothing to remove right now.
+	CC_SAFE_RELEASE( _entitySprite );
 }
 
 void Player::Fall( )

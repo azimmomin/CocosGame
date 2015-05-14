@@ -15,15 +15,14 @@ USING_NS_CC;
 class Entity
 {
 public:
-	virtual Sprite* GetSprite( ) const
+	Entity( ) {};
+	virtual ~Entity( )    = 0;
+	Sprite* GetSprite( ) const
 	{
 		return _entitySprite;
-	}
-	virtual ~Entity( )
-	{
-		CC_SAFE_RELEASE( _entitySprite );
-	}
-private:
+	};
+protected:
+
 	Sprite* _entitySprite = NULL;
 };
 #endif /* __ENTITY_H__ */

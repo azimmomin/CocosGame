@@ -46,7 +46,7 @@ bool Game::init()
     _isMoveHeld = false;
     _heldDir    = PlayerAction::NONE;
 
-    this->addChild( Player::GetInstance( ).GetSprite( ), ZOrder::BACKGROUND );
+    this->addChild( Player::GetInstance( ).GetSprite( ), ZOrder::FOREGROUND );
     auto touchListener = EventListenerTouchAllAtOnce::create( );
     touchListener->onTouchesBegan = CC_CALLBACK_2( Game::onTouchesBegan, this );
     touchListener->onTouchesEnded = CC_CALLBACK_2( Game::onTouchesEnded, this );

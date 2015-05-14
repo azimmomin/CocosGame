@@ -12,7 +12,7 @@
 #include "Projectile.h"
 #include "Entity.h"
 
-class Player : Entity
+class Player : public Entity
 {
 private:
 	Player( );                                          // Will be a singleton class
