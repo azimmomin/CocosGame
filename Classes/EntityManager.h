@@ -9,27 +9,24 @@
 #define __ENTITYMANAGER_H__
 
 #include "cocos2d.h"
-#include <vector>
+#include <list>
 #include "Projectile.h"
 
 USING_NS_CC;
 
-class EntityManager
+/** EntityManager.h
+ *  Manages all PASSIVE entities. I.E. the ones not under direct control of the player.
+ */
+namespace EntityManager
 {
-public:
+	void AddEntity( PassiveEntity *e, Layer *layer );
+	void UpdateAll( Layer *layer );
+	void UnloadEntityManager( );
 
-private:
-	EntityManager( );                                                 // Will be a singleton class
-	EntityManager( EntityManager const& copy )             = delete;  // Copy Constructor ( Does nothing )
-	EntityManager& operator=( EntityManager const& copy )  = delete;  // Assignment Operator ( Does nothing )
-
-	vector<Entity*> _bullets;
-public:
-	void           AddEntity( Entity entity );
-	static Player& GetInstance( )                       // Meyer's Singleton for thread safety in C++11 onwards
-	{
-		static Player mPlayerInstance;
-		return mPlayerInstance;
-	};
+	static std::list< PassiveEntity* > *sPassiveEntities = new std::list< PassiveEntity* > ( );
+	static std::list< PassiveEntity* > *sPendingEntities = new std::list< PassiveEntity* > ( );
+	static bool                           sIsUpdating      = false;
 };
-#endif /* __ENTITYMANAGER_H__ */
+
+#endif // __ENTITYMANAGER_H__
+

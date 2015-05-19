@@ -1,5 +1,6 @@
 Implement Shooting
-  - need an entitymanager
+  - Implement projectile Update
+  - get picture of projectile
 Make Obstacles
 Collision detection callbacks
 Make Enemies

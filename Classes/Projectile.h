@@ -13,11 +13,12 @@
 
 USING_NS_CC;
 
-class Projectile : Entity
+class Projectile : PassiveEntity
 {
 public:
 	Projectile( Vec2 position );
 	~Projectile( );
+	virtual void Update( ) override;
 };
 
 #endif /* __PROJECTILE_H__ */

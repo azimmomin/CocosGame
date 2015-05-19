@@ -89,6 +89,7 @@ void Player::Move( )
 void Player::ResetJumpCount( )
 {
 	_jumpCount = 0;
+	_numProjectiles = PROJECTILE_COUNT;
 }
 
 void Player::SetFalling( const bool isFalling )
@@ -98,7 +99,14 @@ void Player::SetFalling( const bool isFalling )
 
 void Player::Shoot( )
 {
-
+	if ( _numProjectiles > 0 )
+	{
+		Size contentSize = entitySprite->getContentSize( );
+		Vec2 projPos( _entitySprite->getPositionX( ) + contentSize.width,
+				      _entitySprite->getPositionY( ) + contentSize.height / 2 );
+		EntityManager::AddEntity( new Projectile( projPos ) );
+		_numProjectiles -= 1;
+	}
 }
 
 // Currently only meant for movement since jumping and shooting don't affect the

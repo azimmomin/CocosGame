@@ -17,7 +17,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameScene.cpp \
                    ../../Classes/Player.cpp \
                    ../../Classes/Entity.cpp \
-                   ../../Classes/Projectile.cpp
+                   ../../Classes/PassiveEntity.cpp \
+                   ../../Classes/Projectile.cpp \
+                   ../../Classes/EntityManager.cpp
                    
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

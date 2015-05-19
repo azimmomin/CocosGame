@@ -18,6 +18,7 @@ public:
 	virtual bool init( );
 	// implement the "static create()" method manually
 	CREATE_FUNC( Game );
+	virtual ~Game( );
 private:
 	PlayerAction GetActionFromVec( cocos2d::Vec2 position );
 	void InitiateAttack( );

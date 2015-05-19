@@ -58,7 +58,10 @@ bool Game::init()
     return true;
 }
 
-
+Game::~Game( )
+{
+	EntityManager::UnloadEntityManager( );
+}
 
 PlayerAction Game::GetActionFromVec( Vec2 position )
 {

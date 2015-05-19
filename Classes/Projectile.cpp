@@ -24,3 +24,8 @@ Projectile::~Projectile( )
 {
 	CC_SAFE_RELEASE( _entitySprite );
 }
+
+Projectile::Update( )
+{
+	// TO DO
+}
