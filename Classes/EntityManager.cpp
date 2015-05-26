@@ -14,7 +14,7 @@ namespace EntityManager
 		if ( sIsUpdating )
 		{
 			sPendingEntities->push_back( e );
-			layer->addChild( e );
+			layer->addChild( e->GetSprite( ) );
 		}
 		else
 		{
@@ -24,34 +24,38 @@ namespace EntityManager
 
 	void UpdateAll( Layer *layer )
 	{
+		// Update all entities currently checked into this manager.
 		sIsUpdating = true;
 
 		std::list< PassiveEntity* > ::iterator it = sPassiveEntities->begin( );
-		for ( ; it != sPassiveEntities->end( ); it += 1 )
+		for ( ; it != sPassiveEntities->end( ); it++ )
 		{
-			it->Update( );
+			(*it)->Update( );
 		}
 
 		sIsUpdating = false;
 
-		std::list< PassiveEntity* > ::iterator it = sPendingEntities->begin( );
-		for ( ; it != sPendingEntities->end( ); it += 1 )
+		// Check in all entities that were added while we were updating.
+		// These will be updated in the next frame.
+		it = sPendingEntities->begin( );
+		for ( ; it != sPendingEntities->end( ); it++ )
 		{
-			sPassiveEntities->push_back( it );
-			layer->addChild( it );
+			sPassiveEntities->push_back( *it );
+			layer->addChild( (*it)->GetSprite( ) );
 		}
 		sPassiveEntities->clear( );
 
-		std::list< PassiveEntity* > ::iterator it = sPassiveEntities->begin( );
+		// Remove any entities that are no longer on the screen.
+		it = sPassiveEntities->begin( );
 		while ( it != sPassiveEntities->end( ) )
 		{
-			if ( !layer->getBoundingBox( ).containsPoint( it->GetSprite( )->getPosition( ) ) )
+			if ( !layer->getBoundingBox( ).containsPoint( (*it)->GetSprite( )->getPosition( ) ) )
 			{
-				it = list->erase( it );
+				it = sPassiveEntities->erase( it );
 			}
 			else
 			{
-				it += 1;
+				it++;
 			}
 		}
 	}

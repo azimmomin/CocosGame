@@ -12,12 +12,12 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
+                   ../../Classes/Entity.cpp \
+                   ../../Classes/PassiveEntity.cpp \
                    ../../Classes/MainMenuScene.cpp \
                    ../../Classes/LevelSelectScene.cpp \
                    ../../Classes/GameScene.cpp \
                    ../../Classes/Player.cpp \
-                   ../../Classes/Entity.cpp \
-                   ../../Classes/PassiveEntity.cpp \
                    ../../Classes/Projectile.cpp \
                    ../../Classes/EntityManager.cpp
                    

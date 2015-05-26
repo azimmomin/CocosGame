@@ -7,6 +7,7 @@
 #define COCOS2D_DEBUG 1
 #include "GameScene.h"
 #include "Definitions.h"
+#include "EntityManager.h"
 
 USING_NS_CC;
 
@@ -94,7 +95,8 @@ PlayerAction Game::GetActionFromVec( Vec2 position )
 
 void Game::InitiateAttack( )
 {
-	Player::GetInstance( ).Shoot( );
+	// Need to pass this layer so we can add a bullet sprite to it.
+	Player::GetInstance( ).Shoot( this );
 }
 
 void Game::InitiateJump( )

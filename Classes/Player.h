@@ -38,7 +38,7 @@ public:
 	void           Move( );
 	void           ResetJumpCount( );
 	void           SetFalling( const bool isFalling );
-	void           Shoot( );
+	void           Shoot( Layer *layer );
 	void           UpdateState( const PlayerAction &dir );
 };
 

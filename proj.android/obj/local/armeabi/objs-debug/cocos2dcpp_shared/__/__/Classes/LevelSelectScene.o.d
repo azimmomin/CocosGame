@@ -354,7 +354,7 @@ obj/local/armeabi/objs-debug/cocos2dcpp_shared/__/__/Classes/LevelSelectScene.o:
  jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h \
  jni/../../Classes/GameScene.h jni/../../Classes/Player.h \
  jni/../../Classes/Definitions.h jni/../../Classes/Projectile.h \
- jni/../../Classes/Entity.h
+ jni/../../Classes/PassiveEntity.h jni/../../Classes/Entity.h
 
 jni/../../Classes/LevelSelectScene.h:
 
@@ -1067,5 +1067,7 @@ jni/../../Classes/Player.h:
 jni/../../Classes/Definitions.h:
 
 jni/../../Classes/Projectile.h:
+
+jni/../../Classes/PassiveEntity.h:
 
 jni/../../Classes/Entity.h:

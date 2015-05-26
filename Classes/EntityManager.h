@@ -23,6 +23,8 @@ namespace EntityManager
 	void UpdateAll( Layer *layer );
 	void UnloadEntityManager( );
 
+	//static std::list< PassiveEntity* > sPassiveEntities;
+	//static std::list< PassiveEntity* > sPendingEntities;
 	static std::list< PassiveEntity* > *sPassiveEntities = new std::list< PassiveEntity* > ( );
 	static std::list< PassiveEntity* > *sPendingEntities = new std::list< PassiveEntity* > ( );
 	static bool                           sIsUpdating      = false;

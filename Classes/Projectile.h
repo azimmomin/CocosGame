@@ -9,11 +9,11 @@
 #define __PROJECTILE_H__
 
 #include "Definitions.h"
-#include "Entity.h"
+#include "PassiveEntity.h"
 
 USING_NS_CC;
 
-class Projectile : PassiveEntity
+class Projectile : public PassiveEntity
 {
 public:
 	Projectile( Vec2 position );

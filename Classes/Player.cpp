@@ -13,6 +13,7 @@
 
 #include "Player.h"
 #include <algorithm>
+#include "EntityManager.h"
 
 USING_NS_CC;
 
@@ -97,14 +98,14 @@ void Player::SetFalling( const bool isFalling )
 	_isFalling = isFalling;
 }
 
-void Player::Shoot( )
+void Player::Shoot( Layer *layer )
 {
 	if ( _numProjectiles > 0 )
 	{
-		Size contentSize = entitySprite->getContentSize( );
+		Size contentSize = _entitySprite->getContentSize( );
 		Vec2 projPos( _entitySprite->getPositionX( ) + contentSize.width,
 				      _entitySprite->getPositionY( ) + contentSize.height / 2 );
-		EntityManager::AddEntity( new Projectile( projPos ) );
+		EntityManager::AddEntity( new Projectile( projPos ), layer );
 		_numProjectiles -= 1;
 	}
 }
