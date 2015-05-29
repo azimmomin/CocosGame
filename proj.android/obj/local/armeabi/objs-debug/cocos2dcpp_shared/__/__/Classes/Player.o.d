@@ -1,6 +1,6 @@
 obj/local/armeabi/objs-debug/cocos2dcpp_shared/__/__/Classes/Player.o: \
- jni/../../Classes/Player.cpp jni/../../Classes/Player.h \
- jni/../../Classes/Definitions.h jni/../../cocos2d/cocos/3d/../cocos2d.h \
+ jni/../../Classes/Player.cpp jni/../../Classes/EntityManager.h \
+ jni/../../cocos2d/cocos/3d/../cocos2d.h \
  jni/../../cocos2d/cocos/3d/../base/ccConfig.h \
  jni/../../cocos2d/cocos/3d/../platform/CCPlatformConfig.h \
  jni/../../cocos2d/cocos/3d/../base/CCRef.h \
@@ -351,12 +351,11 @@ obj/local/armeabi/objs-debug/cocos2dcpp_shared/__/__/Classes/Player.o: \
  jni/../../cocos2d/cocos/3d/../deprecated/CCString.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h \
- jni/../../Classes/Projectile.h jni/../../Classes/PassiveEntity.h \
- jni/../../Classes/Entity.h jni/../../Classes/EntityManager.h
+ jni/../../Classes/Projectile.h jni/../../Classes/Definitions.h \
+ jni/../../Classes/PassiveEntity.h jni/../../Classes/Entity.h \
+ jni/../../Classes/Player.h
 
-jni/../../Classes/Player.h:
-
-jni/../../Classes/Definitions.h:
+jni/../../Classes/EntityManager.h:
 
 jni/../../cocos2d/cocos/3d/../cocos2d.h:
 
@@ -1062,8 +1061,10 @@ jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h:
 
 jni/../../Classes/Projectile.h:
 
+jni/../../Classes/Definitions.h:
+
 jni/../../Classes/PassiveEntity.h:
 
 jni/../../Classes/Entity.h:
 
-jni/../../Classes/EntityManager.h:
+jni/../../Classes/Player.h:

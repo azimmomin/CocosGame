@@ -11,10 +11,9 @@
  */
 #define COCOS2D_DEBUG 1
 
+#include "EntityManager.h"
 #include "Player.h"
 #include <algorithm>
-#include "EntityManager.h"
-
 USING_NS_CC;
 
 
@@ -100,14 +99,19 @@ void Player::SetFalling( const bool isFalling )
 
 void Player::Shoot( Layer *layer )
 {
+	CCLOG( "NUM PROJECTILES: %d", _numProjectiles );
 	if ( _numProjectiles > 0 )
 	{
 		Size contentSize = _entitySprite->getContentSize( );
 		Vec2 projPos( _entitySprite->getPositionX( ) + contentSize.width,
 				      _entitySprite->getPositionY( ) + contentSize.height / 2 );
-		EntityManager::AddEntity( new Projectile( projPos ), layer );
+		// The projectile is dynamically allocated because it will need to persist after this
+		// function ends. The EntityManager will be responsible for deleting the object.
+		Projectile *p = new Projectile( projPos );
+		EntityManager::AddEntity( layer, p );
 		_numProjectiles -= 1;
 	}
+	CCLOG( "NUM PROJECTILES: %d", _numProjectiles );
 }
 
 // Currently only meant for movement since jumping and shooting don't affect the

@@ -37,7 +37,7 @@
 #define GAME_PHYSICS_MATERIAL cocos2d::PhysicsMaterial( 0.0f, -100.0f, 0.0f )
 
 #define PROJECTILE_COUNT 3
-
+#define PROJECTILE_SPEED 5
 enum ZOrder
 {
 	BACKGROUND   = 0,

@@ -1,6 +1,5 @@
 Implement Shooting
-  - Implement projectile Update
-  - get picture of projectile
+  - Projectile isn't deleting properly
 Make Obstacles
 Collision detection callbacks
 Make Enemies

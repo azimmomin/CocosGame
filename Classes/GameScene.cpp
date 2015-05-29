@@ -96,7 +96,9 @@ PlayerAction Game::GetActionFromVec( Vec2 position )
 void Game::InitiateAttack( )
 {
 	// Need to pass this layer so we can add a bullet sprite to it.
+	CCLOG( "Enters Attack" );
 	Player::GetInstance( ).Shoot( this );
+	CCLOG( "Exits Attack" );
 }
 
 void Game::InitiateJump( )
@@ -207,4 +209,5 @@ void Game::UpdateGame( float dt )
 		InitiateMove( _heldDir );
 	}
 	Player::GetInstance( ).Fall( );
+	EntityManager::UpdateAll( this );
 }

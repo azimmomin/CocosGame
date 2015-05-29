@@ -352,7 +352,8 @@ obj/local/armeabi/objs-debug/cocos2dcpp_shared/__/__/Classes/EntityManager.o: \
  jni/../../cocos2d/cocos/3d/../deprecated/CCNotificationCenter.h \
  jni/../../cocos2d/cocos/3d/../deprecated/CCDeprecated.h \
  jni/../../Classes/Projectile.h jni/../../Classes/Definitions.h \
- jni/../../Classes/PassiveEntity.h jni/../../Classes/Entity.h
+ jni/../../Classes/PassiveEntity.h jni/../../Classes/Entity.h \
+ /home/azim/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream
 
 jni/../../Classes/EntityManager.h:
 
@@ -1065,3 +1066,5 @@ jni/../../Classes/Definitions.h:
 jni/../../Classes/PassiveEntity.h:
 
 jni/../../Classes/Entity.h:
+
+/home/azim/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream:

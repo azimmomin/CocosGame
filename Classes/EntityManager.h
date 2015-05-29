@@ -19,15 +19,16 @@ USING_NS_CC;
  */
 namespace EntityManager
 {
-	void AddEntity( PassiveEntity *e, Layer *layer );
+	void AddEntity( Layer *layer, PassiveEntity *p );
+//	void AddEntity( Layer *layer );
 	void UpdateAll( Layer *layer );
 	void UnloadEntityManager( );
 
 	//static std::list< PassiveEntity* > sPassiveEntities;
 	//static std::list< PassiveEntity* > sPendingEntities;
-	static std::list< PassiveEntity* > *sPassiveEntities = new std::list< PassiveEntity* > ( );
-	static std::list< PassiveEntity* > *sPendingEntities = new std::list< PassiveEntity* > ( );
-	static bool                           sIsUpdating      = false;
+	static std::list< PassiveEntity* > sPassiveEntities;
+	static std::list< PassiveEntity* > sPendingEntities;
+	static bool                        sIsUpdating = false;
 };
 
 #endif // __ENTITYMANAGER_H__
