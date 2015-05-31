@@ -21,8 +21,17 @@ public:
 	{
 		return _entitySprite;
 	};
+	int     GetTag( )    const
+	{
+		return _tag;
+	}
+	void    SetTag( int tag )
+	{
+		_tag = tag;
+	}
 protected:
 
 	Sprite* _entitySprite = NULL;
+	int     _tag;
 };
 #endif /* __ENTITY_H__ */

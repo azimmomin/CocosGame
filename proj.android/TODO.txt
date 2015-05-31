@@ -1,5 +1,5 @@
 Implement Shooting
-  - Projectile isn't deleting properly
+  - projectile sprites still sticking around after Projectile deletion.
 Make Obstacles
 Collision detection callbacks
 Make Enemies

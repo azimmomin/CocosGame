@@ -9,7 +9,6 @@
 
 Projectile::Projectile( Vec2 position )
 {
-	CCLOG( "Creating Projectile" );
 	_entitySprite = Sprite::create( "Projectile.png" );
 	_entitySprite->setAnchorPoint( Vec2::ZERO );
 	_entitySprite->setPosition( position );
@@ -19,7 +18,6 @@ Projectile::Projectile( Vec2 position )
 	_entitySprite->setPhysicsBody( projectilePhysicsBody );
 	_entitySprite->getPhysicsBody( )->setCollisionBitmask( PROJECTILE_COLLISION_BITMASK );
 	_entitySprite->getPhysicsBody( )->setContactTestBitmask( true );
-	CCLOG( " Finished Creating Projectile" );
 }
 
 Projectile::~Projectile( )

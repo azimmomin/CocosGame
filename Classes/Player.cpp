@@ -89,7 +89,7 @@ void Player::Move( )
 void Player::ResetJumpCount( )
 {
 	_jumpCount = 0;
-	_numProjectiles = PROJECTILE_COUNT;
+	//_numProjectiles = PROJECTILE_COUNT;
 }
 
 void Player::SetFalling( const bool isFalling )

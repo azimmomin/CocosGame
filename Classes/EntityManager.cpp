@@ -19,7 +19,7 @@ namespace EntityManager
 		else
 		{
 			sPassiveEntities.push_back( p );
-			layer->addChild( p->GetSprite( ), ZOrder::FOREGROUND );
+			layer->addChild( p->GetSprite( ), ZOrder::FOREGROUND, p->GetTag( ) );
 		}
 	}
 
@@ -43,9 +43,9 @@ namespace EntityManager
 		{
 			sPassiveEntities.push_back( *it );
 			layer->addChild( (*it)->GetSprite( ) );
-			delete *it; // delete item from pending entities
 		}
-		sPendingEntities.clear( ); // clear pending list.
+		sPendingEntities.clear( ); // clear pending list. note that the projectile
+		                           // hasn't been deleted, just transferred to another list.
 
 		// Remove any entities that are no longer on the screen.
 		it = sPassiveEntities.begin( );
@@ -55,11 +55,12 @@ namespace EntityManager
 			{
 				// delete PassiveEntity and the remove pointer from list.
 				CCLOG("removing projectile");
-				PassiveEntity *holder = *it;
-				CCLOG("SIZE BEFORE: %d", sPassiveEntities.size( ) );
+				//PassiveEntity *holder = *it;
+				//layer->removeChildByTag( (*it)->GetTag( ), false );
 				it = sPassiveEntities.erase( it );
-				CCLOG("SIZE AFTER: %d", sPassiveEntities.size( ) );
-				delete holder;
+				// need to remove projectile from layer here.
+				CCLOG( "After erasing." );
+				//delete holder;
 				CCLOG( "finished removing projectile" );
 			}
 			else
