@@ -104,7 +104,7 @@ void Player::Shoot( Layer *layer )
 	{
 		Size contentSize = _entitySprite->getContentSize( );
 		Vec2 projPos( _entitySprite->getPositionX( ) + contentSize.width,
-				      _entitySprite->getPositionY( ) + contentSize.height / 2 );
+				      _entitySprite->getPositionY( ) + contentSize.height / 4 );
 		// The projectile is dynamically allocated because it will need to persist after this
 		// function ends. The EntityManager will be responsible for deleting the object.
 		Projectile *p = new Projectile( projPos );

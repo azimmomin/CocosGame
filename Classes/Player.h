@@ -24,7 +24,7 @@ private:
 	bool           _isFalling;
 	int            _numProjectiles;
 public:
-	~Player( );
+	virtual        ~Player( );
 	void           Fall( );
 	static Player& GetInstance( )                       // Meyer's Singleton for thread safety in C++11 onwards
 	{

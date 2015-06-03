@@ -19,8 +19,9 @@
 
 #define NUM_LEVELS 9
 
-#define PLAYER_COLLISION_BITMASK 0x00000001
+#define PLAYER_COLLISION_BITMASK     0x00000001
 #define PROJECTILE_COLLISION_BITMASK 0x00000002
+#define ENEMY_COLLISION_BITMASK      0x00000003
 
 #define PLAYER_SPEED 10
 #define PLAYER_ACCELERATION 2.0f
@@ -37,7 +38,7 @@
 #define GAME_PHYSICS_MATERIAL cocos2d::PhysicsMaterial( 0.0f, -100.0f, 0.0f )
 
 #define PROJECTILE_COUNT 3
-#define PROJECTILE_SPEED 5
+#define PROJECTILE_SPEED 15
 enum ZOrder
 {
 	BACKGROUND   = 0,
@@ -52,5 +53,12 @@ enum PlayerAction
 	LEFT  = 2,
 	JUMP  = 3,
 	SHOOT = 4
+};
+
+enum EntityTag
+{
+	PLAYER     = 0,
+	ENEMY      = 1,
+	PROJECTILE = 2
 };
 #endif /* __DEFINITIONS__H_ */

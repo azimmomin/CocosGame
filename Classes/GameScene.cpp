@@ -8,6 +8,7 @@
 #include "GameScene.h"
 #include "Definitions.h"
 #include "EntityManager.h"
+#include "Enemy.h"
 
 USING_NS_CC;
 
@@ -47,7 +48,11 @@ bool Game::init()
     _isMoveHeld = false;
     _heldDir    = PlayerAction::NONE;
 
+    Size visibleSize = Director::getInstance( )->getVisibleSize( );
     this->addChild( Player::GetInstance( ).GetSprite( ), ZOrder::FOREGROUND );
+    Vec2 testEnemyPos( visibleSize.width - Player::GetInstance( ).GetSprite( )->getContentSize( ).width,
+    		           Player::GetInstance( ).GetSprite( )->getContentSize( ).height / 2 );
+    EntityManager::AddEntity( this, new Enemy( testEnemyPos ) );
     auto touchListener = EventListenerTouchAllAtOnce::create( );
     touchListener->onTouchesBegan = CC_CALLBACK_2( Game::onTouchesBegan, this );
     touchListener->onTouchesEnded = CC_CALLBACK_2( Game::onTouchesEnded, this );
@@ -62,6 +67,7 @@ bool Game::init()
 Game::~Game( )
 {
 	EntityManager::UnloadEntityManager( );
+	this->removeAllChildren( );
 }
 
 PlayerAction Game::GetActionFromVec( Vec2 position )

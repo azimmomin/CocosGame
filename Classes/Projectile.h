@@ -17,7 +17,7 @@ class Projectile : public PassiveEntity
 {
 public:
 	Projectile( Vec2 position );
-	~Projectile( );
+	virtual      ~Projectile( );
 	virtual void Update( ) override;
 };
 

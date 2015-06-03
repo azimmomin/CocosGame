@@ -1,8 +1,9 @@
-Implement Shooting
-  - projectile sprites still sticking around after Projectile deletion.
+Abstract out Enemy class so you can make different types of enemies.
+Make Enemies move on their own.
 Make Obstacles
 Collision detection callbacks
-Make Enemies
 Need to update Fall method in Player to stop falling when a collision is detected on bottom
 May need to tweak PLAYER_JUMP_SPEED to allow for higher jumps.
 Player stats/skills: will need to pull out alot of definitions into separate class so we can allow player to tweak them.
+Need to change movement updates to allow for different size screens
+     (i.e. use screen.width for movement updates like you did in jump)

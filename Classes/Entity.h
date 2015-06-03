@@ -9,6 +9,7 @@
 #define __ENTITY_H__
 
 #include "cocos2d.h"
+#include "Definitions.h"
 
 USING_NS_CC;
 
@@ -17,21 +18,21 @@ class Entity
 public:
 	Entity( ) {};
 	virtual ~Entity( )    = 0;
-	Sprite* GetSprite( ) const
+	Sprite*   GetSprite( ) const
 	{
 		return _entitySprite;
 	};
-	int     GetTag( )    const
+	EntityTag GetTag( )    const
 	{
 		return _tag;
 	}
-	void    SetTag( int tag )
+	void      SetTag( EntityTag tag )
 	{
 		_tag = tag;
 	}
 protected:
 
-	Sprite* _entitySprite = NULL;
-	int     _tag;
+	Sprite*   _entitySprite = NULL;
+	EntityTag _tag;
 };
 #endif /* __ENTITY_H__ */

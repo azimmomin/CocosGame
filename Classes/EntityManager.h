@@ -20,7 +20,6 @@ USING_NS_CC;
 namespace EntityManager
 {
 	void AddEntity( Layer *layer, PassiveEntity *p );
-//	void AddEntity( Layer *layer );
 	void UpdateAll( Layer *layer );
 	void UnloadEntityManager( );
 

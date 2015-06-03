@@ -9,6 +9,7 @@
 
 Projectile::Projectile( Vec2 position )
 {
+	SetTag( EntityTag::PROJECTILE );
 	_entitySprite = Sprite::create( "Projectile.png" );
 	_entitySprite->setAnchorPoint( Vec2::ZERO );
 	_entitySprite->setPosition( position );

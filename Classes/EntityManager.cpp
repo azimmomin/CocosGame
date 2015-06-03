@@ -47,21 +47,19 @@ namespace EntityManager
 		sPendingEntities.clear( ); // clear pending list. note that the projectile
 		                           // hasn't been deleted, just transferred to another list.
 
-		// Remove any entities that are no longer on the screen.
+		// Remove any projectile entities that are no longer on the screen.
+		// As of right now we are not going to delete enemies that go off the screen.
+		// Note that this means that a bullet that flies off screen will not kill
+		// an enemy that is off the screen.
 		it = sPassiveEntities.begin( );
 		while ( it != sPassiveEntities.end( ) )
 		{
-			if ( !layer->getBoundingBox( ).containsPoint( (*it)->GetSprite( )->getPosition( ) ) )
+			if ( !layer->getBoundingBox( ).containsPoint( (*it)->GetSprite( )->getPosition( ) )
+				 && (*it)->GetTag( ) == EntityTag::PROJECTILE )
 			{
-				// delete PassiveEntity and the remove pointer from list.
-				CCLOG("removing projectile");
-				//PassiveEntity *holder = *it;
-				//layer->removeChildByTag( (*it)->GetTag( ), false );
+				// delete PassiveEntity and the remove pointer from list and from Game layer.
+				layer->removeChild( (*it)->GetSprite( ), true );
 				it = sPassiveEntities.erase( it );
-				// need to remove projectile from layer here.
-				CCLOG( "After erasing." );
-				//delete holder;
-				CCLOG( "finished removing projectile" );
 			}
 			else
 			{
